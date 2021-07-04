@@ -7,4 +7,5 @@ Rails.application.routes.draw do
 
   resources :today, to: 'todos#today', only: [:index]
   resources :future, to: 'todos#future', only: [:index]
+  resources :all_today, to: 'todos#all_today', only: [:index]
 end

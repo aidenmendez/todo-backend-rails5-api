@@ -41,6 +41,11 @@ class TodosController < ApplicationController
     render :json => due_later
   end
 
+  def all_today
+    todays_tasks = Todo.where(:due_date => Date.today)
+    render :json => todays_tasks
+  end
+
   private
 
   def todo_params
