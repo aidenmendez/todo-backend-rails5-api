@@ -6,4 +6,5 @@ Rails.application.routes.draw do
   root 'todos#index'
 
   resources :today, to: 'todos#today', only: [:index]
+  resources :future, to: 'todos#future', only: [:index]
 end

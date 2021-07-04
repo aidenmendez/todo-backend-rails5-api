@@ -36,10 +36,15 @@ class TodosController < ApplicationController
     render :json => due_today
   end
 
+  def future
+    due_later = Todo.where(:due_date.gt => Date.today, completed: false)
+    render :json => due_later
+  end
+
   private
 
   def todo_params
-    params.permit(:title, :completed, :order)
+    params.permit(:title, :completed, :order, :due_date)
   end
 
 end
