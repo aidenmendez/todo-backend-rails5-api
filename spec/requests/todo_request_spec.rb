@@ -16,7 +16,7 @@ describe Todo do
       expect(data[:created_at])
       expect(data[:completed]).to eq(false)
     end
-    
+
     it "can return a single task" do
       task = Todo.first
   
@@ -56,14 +56,25 @@ describe Todo do
       expect(tasks_data[0][:title]).to eq("Example 1")
       expect(tasks_data[1][:title]).to eq("Example 2")
     end
-  end
 
-  it "can delete a single task" do
-    expect(Todo.count).to eq(1)
+    it "can delete a single task" do
+      expect(Todo.count).to eq(1)
 
-    task = Todo.first
+      task = Todo.first
 
-    delete "/todos/#{task.id}"
-    expect(Todo.count).to eq(0)
+      delete "/todos/#{task.id}"
+      expect(Todo.count).to eq(0)
+    end
+
+    it "can delete all tasks" do
+      task_params = { :title => "Example 2", :order => 2 }
+      post '/todos', {params: task_params}
+  
+      expect(Todo.count).to eq(2)
+  
+      delete '/todos'
+  
+      expect(Todo.count).to eq(0)
+    end
   end
 end
