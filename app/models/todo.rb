@@ -4,7 +4,7 @@ class Todo
 
   field :title, type: String
   field :url, type: String
-  field :completed, type: Boolean, default: FALSE
+  field :completed, type: Boolean, default: false
   field :order, type: Integer
 
 end
