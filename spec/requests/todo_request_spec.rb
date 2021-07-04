@@ -29,7 +29,7 @@ describe Todo do
       expect(task_data[:order]).to eq(1)
       expect(task_data[:url]).to be_a(String)
     end
-    
+
     it "can update a task" do
       task = Todo.first
       expect(task.completed).to eq(false)
@@ -41,5 +41,20 @@ describe Todo do
       expect(task.completed).to eq(true)
     end
 
+    it "can show all tasks" do
+      task_params = { :title => "Example 2", :order => 2 }
+      
+      post '/todos', {params: task_params}
+  
+      expect(Todo.count).to eq(2)
+  
+      get '/todos'
+  
+      tasks_data = JSON.parse(response.body, symbolize_names: true)
+  
+      expect(tasks_data.count).to eq(2)
+      expect(tasks_data[0][:title]).to eq("Example 1")
+      expect(tasks_data[1][:title]).to eq("Example 2")
+    end
   end
 end
