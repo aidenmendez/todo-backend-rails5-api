@@ -58,12 +58,15 @@ describe Todo do
     end
 
     it "can delete a single task" do
-      expect(Todo.count).to eq(1)
+      task_params = { :title => "Example 2", :order => 2 }
+      post '/todos', {params: task_params}
+
+      expect(Todo.count).to eq(2)
 
       task = Todo.first
 
       delete "/todos/#{task.id}"
-      expect(Todo.count).to eq(0)
+      expect(Todo.count).to eq(1)
     end
 
     it "can delete all tasks" do
@@ -87,7 +90,11 @@ describe Todo do
   
       expect(data.count).to eq(2)
       expect(data[0][:title]).to eq("Example 1")
+      expect(data[0][:completed]).to be false
+      expect(data[0][:due_date]).to eq(Date.today.to_s)
       expect(data[1][:title]).to eq("Example 2")
+      expect(data[1][:completed]).to be false
+      expect(data[1][:due_date]).to eq(Date.today.to_s)
     end
 
     it "can return all incomplete tasks due in the future" do
@@ -101,6 +108,12 @@ describe Todo do
       data = JSON.parse(response.body, symbolize_names: true)
   
       expect(data.count).to eq(2)
+      expect(data[0][:title]).to eq('Example 2')
+      expect(data[0][:completed]).to be false
+      expect(data[0][:due_date]).to eq(tomorrow.to_s)
+      expect(data[1][:title]).to eq('Example 3')
+      expect(data[1][:completed]).to be false
+      expect(data[1][:due_date]).to eq(tomorrow.to_s)
     end
 
     it "can return all complete and incomplete tasks for today" do
