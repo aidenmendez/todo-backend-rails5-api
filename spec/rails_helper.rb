@@ -5,6 +5,8 @@ require File.expand_path('../config/environment', __dir__)
 # Prevent database truncation if the environment is production
 abort("The Rails environment is running in production mode!") if Rails.env.production?
 require 'rspec/rails'
+require 'mongoid-rspec'
+
 # Add additional requires below this line. Rails is not loaded until this point!
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
@@ -25,7 +27,7 @@ require 'rspec/rails'
 RSpec.configure do |config|
   # Remove this line to enable support for ActiveRecord
   config.use_active_record = false
-
+  config.include Mongoid::Matchers, type: :model
   # If you enable ActiveRecord support you should unncomment these lines,
   # note if you'd prefer not to run each example within a transaction, you
   # should set use_transactional_fixtures to false.
