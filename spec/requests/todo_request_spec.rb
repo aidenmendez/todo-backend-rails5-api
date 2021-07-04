@@ -57,4 +57,13 @@ describe Todo do
       expect(tasks_data[1][:title]).to eq("Example 2")
     end
   end
+
+  it "can delete a single task" do
+    expect(Todo.count).to eq(1)
+
+    task = Todo.first
+
+    delete "/todos/#{task.id}"
+    expect(Todo.count).to eq(0)
+  end
 end
