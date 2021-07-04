@@ -76,5 +76,18 @@ describe Todo do
   
       expect(Todo.count).to eq(0)
     end
+
+    it "can return all incomplete tasks due today" do
+      post '/todos', params: { :title => "Example 2", :order => 2 }
+      post '/todos', params: { :title => "Example 3", :order => 3, :completed => true }
+  
+      get "/today"
+  
+      data = JSON.parse(response.body, symbolize_names: true)
+  
+      expect(data.count).to eq(2)
+      expect(data[0][:title]).to eq("Example 1")
+      expect(data[1][:title]).to eq("Example 2")
+    end
   end
 end
