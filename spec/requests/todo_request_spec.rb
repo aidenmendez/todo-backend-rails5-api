@@ -16,7 +16,20 @@ describe Todo do
       expect(data[:created_at])
       expect(data[:completed]).to eq(false)
     end
-
+    
+    it "can return a single task" do
+      task = Todo.first
+  
+      get "/todos/#{task.id}"
+  
+      task_data = JSON.parse(response.body, symbolize_names: true)
+  
+      expect(task_data[:title]).to eq("Example 1")
+      expect(task_data[:completed]).to be false
+      expect(task_data[:order]).to eq(1)
+      expect(task_data[:url]).to be_a(String)
+    end
+    
     it "can update a task" do
       task = Todo.first
       expect(task.completed).to eq(false)
@@ -27,5 +40,6 @@ describe Todo do
   
       expect(task.completed).to eq(true)
     end
+
   end
 end
