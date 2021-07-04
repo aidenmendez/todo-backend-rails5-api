@@ -5,4 +5,5 @@ Rails.application.routes.draw do
   match 'todos', to: 'todos#destroy_all', via: :delete
   root 'todos#index'
 
+  resources :today, to: 'todos#today', only: [:index]
 end
