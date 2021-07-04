@@ -11,8 +11,10 @@ development:
       hosts:
         #- localhost:27017
         #- 192.168.99.100:32768
-        - <%= ENV['DB_HOST'] || 'localhost:27017' %>
+        # - <%= ENV['DB_HOST'] || 'localhost:27017' %>
+        - localhost:27017
       options:
+        server_selection_timeout: 1
         # Change the default write concern. (default = { w: 1 })
         # write:
         #   w: 1
@@ -137,7 +139,8 @@ test:
     default:
       database: todo_test
       hosts:
-        - <%= ENV['DB_HOST'] || '192.168.99.100:32768' %>
+        # - <%= ENV['DB_HOST'] || '192.168.99.100:32768' %>
+        - localhost:27017
       options:
         read:
           mode: :primary
